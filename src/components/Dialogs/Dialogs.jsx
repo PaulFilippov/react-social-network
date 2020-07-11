@@ -1,29 +1,48 @@
 import React from "react";
-import s from './Dialogs.module.css';
-import {NavLink} from "react-router-dom";
-import DialogItem from "./DialogItem/DialogsItem";
+import styleClasses from './Dialogs.module.css';
+import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
 
 const Dialogs = (props) => {
 
-    let dialogElements = props.state.dialogs.map( (dialog) => (
-            <DialogItem name={dialog.name} id={dialog.id}/>
-            )
-        );
+    let state = props.dialogsPage;
 
-    let messagesElements = props.state.messages.map( (message) => (
-            <Message message={message.message}/>
-            )
-        );
+    let dialogElements = state.dialogs
+        .map( dialog => <DialogItem name={dialog.name} key={dialog.id} id={dialog.id}/> );
+
+    let messagesElements = state.messages
+        .map( m => <Message message={m.message} key={m.id}/> );
+
+    let addMessage = () => {
+        props.addMessage();
+    };
+
+    let onMessageChange = (event)=> {
+        let text = event.target.value;
+        props.updateNewMessageBody(text);
+    }
 
     return (
-        <div className={s.dialogs}>
-            <div className={s.dialogsItems}>
+        <div className={styleClasses.dialogs}>
+            <div className={styleClasses.dialogsItems}>
                 {dialogElements}
             </div>
-            <div className={s.messages}>
-               {messagesElements}
+            <div className={styleClasses.messages}>
+                <div>{messagesElements}</div>
+                <div>
+                    <div>
+                        <div>
+                            <textarea onChange={onMessageChange}
+                                      placeholder='Enter message'
+                                      value={state.newMessageText}>
+                            </textarea>
+                        </div>
+                        <div>
+                            <button onClick={addMessage}>Send message</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );
