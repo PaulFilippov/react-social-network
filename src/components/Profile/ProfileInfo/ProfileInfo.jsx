@@ -2,6 +2,7 @@ import React from "react";
 import styleClasses from './ProfileInfo.module.css';
 import Preloader from "../../Preloader/Preloader";
 import defaultImg from "../../../assets/images/snoop.png";
+import ProfileStatus from "./ProfileStatus";
 
 const ProfileInfo = (props) => {
 
@@ -22,6 +23,7 @@ const ProfileInfo = (props) => {
         <div>
             <div className={styleClasses.descriptionBlock}>
                     <img src={imageProfile} />
+                    <ProfileStatus status={"Hello"}/>
                 <div>{props.profile.aboutMe}</div>
             </div>
         </div>
