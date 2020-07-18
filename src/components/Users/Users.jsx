@@ -13,7 +13,7 @@ let Users = (props) => {
     }
 
     return (<div>
-            <div>{props.totalUsersCount}</div>
+            <div>Total number of users: {props.totalUsersCount}</div>
             <div className={styleClasses.pagesString}>
                 {pages.map(p => {
                     return <span className={props.currentPage === p && styleClasses.selectedPage}
