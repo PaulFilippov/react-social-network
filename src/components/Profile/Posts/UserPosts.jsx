@@ -32,10 +32,8 @@ let AddNewPostFormRedux = reduxForm({
 
 
 const UserPosts = React.memo(props => {
-
-    console.log("RENDER yoy");
-
-    let postsElements = props.posts
+    let postsElements = [...props.posts]
+        .reverse()
         .map(p => <Post message={p.message}
                         likesCount={p.likesCount}/>);
 
