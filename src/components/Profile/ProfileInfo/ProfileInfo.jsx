@@ -2,7 +2,6 @@ import React from "react";
 import styleClasses from './ProfileInfo.module.css';
 import Preloader from "../../common/Preloader/Preloader";
 import defaultImg from "../../../assets/images/snoop.png";
-import ProfileStatus from "./ProfileStatus";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
 const ProfileInfo = (props) => {

@@ -1,14 +1,16 @@
 import React from "react";
 import styleClasses from "./FormControls.module.css";
+import {Field} from "redux-form";
+import {required} from "../../../utils/validators/validators";
 
 const FormControl = ({input, meta, child, ...props}) => {
     const hasError = meta.touched && meta.error;
     return (
-        <div className={styleClasses.formControl + " " + (hasError ? styleClasses.error : "")} >
+        <div className={styleClasses.formControl + " " + (hasError ? styleClasses.error : "")}>
             <div>
                 {props.children}
             </div>
-            { hasError && <span>{meta.error}</span> }
+            {hasError && <span>{meta.error}</span>}
         </div>
     );
 }
@@ -27,26 +29,13 @@ export const Input = (props) => {
     </FormControl>
 }
 
-// export const TextArea = ({input, meta, ...props}) => {
-//     const hasError = meta.touched && meta.error;
-//     return (
-//         <div className={styleClasses.formControl + " " + (hasError ? styleClasses.error : "")} >
-//            <div>
-//                <textarea {...input} {...props}/>
-//            </div>
-//             { hasError && <span>{meta.error}</span> }
-//         </div>
-//     );
-// }
-
-// export const Input = ({input, meta, ...props}) => {
-//     const hasError = meta.touched && meta.error;
-//     return (
-//         <div className={styleClasses.formControl + " " + (hasError ? styleClasses.error : "")} >
-//             <div>
-//                 <input {...input} {...props}/>
-//             </div>
-//             { hasError && <span>{meta.error}</span> }
-//         </div>
-//     );
-//}
+export const createField = (placeholder, validators, name, component, props={}, text="") => (
+     <div>
+        <Field placeholder={placeholder}
+                        validate={validators}
+                        name={name}
+                        component={component}
+                        {...props}
+    /> {text}
+    </div>
+)

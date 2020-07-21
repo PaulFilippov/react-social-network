@@ -1,7 +1,6 @@
 import {getAuthUserData} from "./authReducer";
 
 
-
 const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS';
 
 
@@ -32,7 +31,6 @@ export const initializedSuccess = () => ({type: INITIALIZED_SUCCESS});
 
 export const initializeApp = () => (dispatch) => {
    let promise = dispatch(getAuthUserData());
-
     //когда промис зарезолвится
     Promise.all([promise])
         .then(() => {
