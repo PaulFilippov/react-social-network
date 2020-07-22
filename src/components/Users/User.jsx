@@ -2,7 +2,6 @@ import React from "react";
 import styleClasses from './Users.module.css';
 import userDefaultPhoto from '../../assets/images/snoop.png'
 import {NavLink} from "react-router-dom";
-import Paginator from "../common/Paginator/Paginator";
 
 
 let User = ({user, ...props}) => {
