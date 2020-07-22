@@ -1,11 +1,9 @@
 import React from 'react';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import store from "./redux/reduxStore";
 import ReactDOM from 'react-dom';
-import App from './App';
-import {BrowserRouter} from "react-router-dom";
-import {Provider} from "react-redux";
+import SocialNetworkApp from "./App";
+
 
 // setInterval (() => {
 //     store.dispatch({type: "FAKE"})},
@@ -13,13 +11,7 @@ import {Provider} from "react-redux";
 
 
     ReactDOM.render(
-        <React.StrictMode>
-            <BrowserRouter>
-                <Provider store={store}>
-                    <App />
-                </Provider>
-            </BrowserRouter>
-        </React.StrictMode>, document.getElementById('root')
+        <SocialNetworkApp/>, document.getElementById('root')
     );
 
 // If you want your app to work offline and load faster, you can change
