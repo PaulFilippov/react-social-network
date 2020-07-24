@@ -1,7 +1,7 @@
 import React from "react";
 import styleClasses from './ProfileInfo.module.css';
 import Preloader from "../../common/Preloader/Preloader";
-import defaultImg from "../../../assets/images/snoop.png";
+import defaultUserPhoto from "../../../assets/images/snoop.png";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
 const ProfileInfo = (props) => {
@@ -10,19 +10,17 @@ const ProfileInfo = (props) => {
         return <Preloader />
     }
 
-    let imageProfile;
-    if (props.profile.photos.large) {
-        imageProfile = props.profile.photos.large;
-    } else if (props.profile.photos.small) {
-        imageProfile = props.profile.photos.small;
-    } else {
-        imageProfile = defaultImg;
-    }
+const onMainPhotoSelected = (e) => {
+        if (e.target.files.length) {
+            props.savePhoto(e.target.files[0]);
+        }
+}
 
     return (
         <div>
             <div className={styleClasses.descriptionBlock}>
-                    <img src={imageProfile} />
+                    <img src={props.profile.photos.large || defaultUserPhoto} className={styleClasses.mainPhoto}/>
+                { props.isOwner && <input type={"file"} onChange={onMainPhotoSelected} /> }
                     <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
                 <div>{props.profile.aboutMe}</div>
             </div>
