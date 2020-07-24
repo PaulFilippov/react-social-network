@@ -3,7 +3,7 @@ import './App.css';
 import {BrowserRouter, Route, Switch, withRouter} from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 // import DialogsContainer from "./components/Dialogs/DialogsContainer";
-import UsersContainer from "./components/Users/UsersContainer";
+//import UsersContainer from "./components/Users/UsersContainer";
 // import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginPage from "./components/Login/Login";
@@ -15,6 +15,7 @@ import store from "./redux/reduxStore";
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 
 class App extends React.Component {
 
@@ -64,7 +65,7 @@ let AppContainer = compose(
 
 let SocialNetworkApp = (props) => {
     return <React.StrictMode>
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
             <Provider store={store}>
                 <AppContainer />
             </Provider>
