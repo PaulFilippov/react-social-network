@@ -11,23 +11,26 @@ import styleClasses from "../common/FormsControls/FormControls.module.css"
 const LoginForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
-            {/*{createField("Email", [required], "email", Input)}*/}
-            {/*{createField("Password", [required], "password", Input, {type: "password"})}*/}
-            {/*{createField(null, [], "rememberMe", Input, {type: "checkbox"}, "remember me")}*/}
+            {createField("Email", [required], "email", Input)}
+            {createField("Password", [required], "password", Input, {type: "password"})}
+            {createField(null, [], "rememberMe", Input, {type: "checkbox"}, "remember me")}
 
-            <div>
-                <Field placeholder={"Email"} name={"email"}
-                       validate={[required]}
-                       component={Input}/>
-            </div>
-            <div>
-                <Field placeholder={"Password"} name={"password"} type={"password"}
-                       validate={[required]}
-                       component={Input}/>
-            </div>
-            <div>
-                <Field component={Input} name={"rememberMe"} type={"checkbox"}/> remember me
-            </div>
+            {/*<div>*/}
+            {/*    <Field placeholder={"Email"} name={"email"}*/}
+            {/*           validate={[required]}*/}
+            {/*           component={Input}/>*/}
+            {/*</div>*/}
+            {/*<div>*/}
+            {/*    <Field placeholder={"Password"} name={"password"} type={"password"}*/}
+            {/*           validate={[required]}*/}
+            {/*           component={Input}/>*/}
+            {/*</div>*/}
+            {/*<div>*/}
+            {/*    <Field component={Input} name={"rememberMe"} type={"checkbox"}/> remember me*/}
+            {/*</div>*/}
+
+            { props.captchaUrl && <img src={props.captchaUrl} /> }
+            { props.captchaUrl && createField("Symbols from image", [required], "captcha", Input, {}) }
 
             {props.error &&
             <div className={styleClasses.formSummaryError}>
@@ -49,7 +52,7 @@ const LoginReduxForm = reduxForm({
 
 const Login = (props) => {
     const onSubmit = (formData) => {
-        props.login(formData.email, formData.password, formData.rememberMe);
+        props.login(formData.email, formData.password, formData.rememberMe, formData.captcha);
     }
 
     if (props.isAuth) {
@@ -58,13 +61,17 @@ const Login = (props) => {
 
     return <div>
         <h1>LOGIN</h1>
-        <LoginReduxForm onSubmit={onSubmit}/>
+        <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl}/>
     </div>
 }
 
+
+
 const mapStateToProps = (state) => ({
+    captchaUrl: state.auth.captchaUrl,
     isAuth: state.auth.isAuth
 })
+
 
 
 export default connect(mapStateToProps, {login})(Login);
