@@ -1,6 +1,6 @@
 import React, {Suspense} from 'react';
 import './App.css';
-import {BrowserRouter, Route, Switch, withRouter} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 // import DialogsContainer from "./components/Dialogs/DialogsContainer";
 //import UsersContainer from "./components/Users/UsersContainer";
@@ -19,13 +19,25 @@ const UsersContainer = React.lazy(() => import('./components/Users/UsersContaine
 
 class App extends React.Component {
 
-    componentDidMount() {
-        this.props.initializeApp();
+
+    catchAllUnhandledErrors = (promiseRejectionEvent) => {
+        alert("Some erroe occured");
+        console.error(promiseRejectionEvent);
     }
 
+    componentDidMount() {
+        this.props.initializeApp();
+        window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors)
+    }
+
+
     render() {
-        if (!this.props.initialized){
-            return <Preloader />
+        if (!this.props.initialized) {
+            return <Preloader/>
         }
 
         return (
@@ -34,19 +46,22 @@ class App extends React.Component {
                 <Navbar/>
                 <div class='app-wrapper-content'>
                     <Suspense fallback={<div>Loading...</div>}>
-                       <Switch>
-                    <Route path='/dialogs'
-                           render={() => <DialogsContainer/>}
-                    />
-                    <Route path='/profile/:userId?'
-                           render={() => <ProfileContainer/>}
-                    />
-                    <Route path='/users'
-                           render={() => <UsersContainer/>}
-                    />
-                    <Route path='/login'
-                           render={() => <LoginPage/>}
-                    />
+                        <Switch>
+                            <Route exact path='/'>
+                                <Redirect to='/profile'/>
+                            </Route>
+                            <Route path='/dialogs'
+                                   render={() => <DialogsContainer/>}
+                            />
+                            <Route path='/profile/:userId?'
+                                   render={() => <ProfileContainer/>}
+                            />
+                            <Route path='/users'
+                                   render={() => <UsersContainer/>}
+                            />
+                            <Route path='/login'
+                                   render={() => <LoginPage/>}
+                            />
                         </Switch>
                     </Suspense>
                 </div>
@@ -56,7 +71,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-   initialized: state.app.initialized
+    initialized: state.app.initialized
 });
 
 let AppContainer = compose(
@@ -67,7 +82,7 @@ let SocialNetworkApp = (props) => {
     return <React.StrictMode>
         <BrowserRouter basename={process.env.PUBLIC_URL}>
             <Provider store={store}>
-                <AppContainer />
+                <AppContainer/>
             </Provider>
         </BrowserRouter>
     </React.StrictMode>
