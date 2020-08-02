@@ -2,6 +2,16 @@ import store from "./store";
 
 const ADD_MESSAGE = 'ADD-MESSAGE';
 
+type DialogType = {
+    id: number
+    name: string
+}
+
+type MessageType = {
+    id: number
+    message: string
+}
+
 let initialState = {
     dialogs: [
         {id: 1, name: "Paha1"},
@@ -9,15 +19,17 @@ let initialState = {
         {id: 3, name: "Paha3"},
         {id: 4, name: "Paha4"},
         {id: 5, name: "Paha5"},
-    ],
+    ] as Array<DialogType>,
     messages: [
         {id: 1, message: "hi1"},
         {id: 2, message: "hi2"},
         {id: 3, message: "hi3"},
-    ]
+    ] as Array<MessageType>
 };
 
-const dilogsReducer = (state = initialState, action) => {
+export type initialStateType = typeof initialState;
+
+const dilogsReducer = (state = initialState, action: any): initialStateType => {
 
     switch (action.type) {
         case ADD_MESSAGE:
@@ -31,6 +43,11 @@ const dilogsReducer = (state = initialState, action) => {
     }
 }
 
-export const addMessageAC = (newMessageBody) => ({type: ADD_MESSAGE, newMessageBody})
+type SendMessageCreatorActionType = {
+    type: typeof ADD_MESSAGE
+    newMessageBody: string
+}
+
+export const addMessageAC = (newMessageBody: string): SendMessageCreatorActionType => ({type: ADD_MESSAGE, newMessageBody})
 
 export default dilogsReducer;
