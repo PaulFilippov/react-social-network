@@ -1,8 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import {
-    setCurrentPage,
-    toggleFollowingProgress,
     requestUsers,
     follow,
     unFollow,
@@ -15,10 +13,14 @@ import {
     getFollowingInProgress,
     getIsFetching,
     getPageSize,
-    getTotalUsersCount, getUsers
+    getTotalUsersCount,
+    getUsers
 } from "../../redux/usersSelectors";
 import {UserType} from "../../types/Types";
 import {AppStateType} from "../../redux/reduxStore";
+
+
+
 
 
 type MapStatePropsType = {
@@ -41,6 +43,10 @@ type OwnPropsType = {
 }
 
 type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
+
+
+
+
 
 
 class UsersContainer extends React.Component<PropsType> {
@@ -73,7 +79,9 @@ class UsersContainer extends React.Component<PropsType> {
 }
 
 
-let mapStateToProps = (state: AppStateType): MapStatePropsType => {
+
+
+let mapStateToProps = (state: AppStateType): any => {
     return {
         users: getUsers(state),
         pageSize: getPageSize(state),
@@ -83,6 +91,9 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
         followingInProgress: getFollowingInProgress(state)
     }
 }
+
+
+
 
 export default compose(
     // TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultRootState
